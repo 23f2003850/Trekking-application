@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Trekker Dashboard</h2><hr>
+<div class="row">
+    <div class="col-md-8">
+        <h4>Available Treks</h4>
+        {% if treks %}
+            <div class="list-group mt-3">
+                {% for trek in treks %}
+                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ trek.name }} - {{ trek.location }}</h5>
+                        <small class="text-muted">{{ trek.duration }} days</small>
+                    </div>
+                    <p class="mb-1">Difficulty: {{ trek.difficulty }} | Slots Available: {{ trek.available_slots }}</p>
+                    <form method="POST" action="{{ url_for('book_trek', trek_id=trek.id) }}">
+                        <button type="submit" class="btn btn-sm btn-success mt-2">Book Now</button>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-secondary mt-3">No open treks are currently available. Check back later!</div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-4">
+        <h4>My Profile</h4>
+        <div class="card mt-3">
+            <div class="card-body">
+                <a href="{{ url_for('user_history') }}" class="btn btn-outline-primary btn-sm w-100">View My Booking History</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
