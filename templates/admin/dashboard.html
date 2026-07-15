@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h2>Admin Dashboard</h2><hr>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body"><h5 class="card-title">Total Treks</h5><p class="card-text fs-2">{{ total_treks }}</p></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body"><h5 class="card-title">Registered Trekkers</h5><p class="card-text fs-2">{{ total_users }}</p></div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-warning mb-3">
+            <div class="card-body"><h5 class="card-title">Staff Members</h5><p class="card-text fs-2">{{ total_staff }}</p></div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-12">
+        <h4>Quick Actions</h4>
+        <a href="{{ url_for('create_trek') }}" class="btn btn-primary">Create New Trek</a>
+        <a href="{{ url_for('admin_manage_treks') }}" class="btn btn-outline-primary">View All Treks</a>
+        <a href="{{ url_for('manage_staff') }}" class="btn btn-outline-secondary">Staff Approvals</a>
+        <a href="{{ url_for('admin_manage_users') }}" class="btn btn-outline-secondary">Manage All Users</a>
+    </div>
+</div>
+{% endblock %}

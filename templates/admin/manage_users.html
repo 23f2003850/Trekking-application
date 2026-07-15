@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Manage Users & Staff</h2>
+    <form class="d-flex" method="GET" action="{{ url_for('admin_manage_users') }}">
+        <input class="form-control me-2" type="search" name="q" placeholder="Search by ID or Name" value="{{ search_query }}">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+</div><hr>
+<table class="table table-hover mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Account Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }} ({{ user.email }})</td>
+            <td>{{ user.role|capitalize }}</td>
+            <td>
+                {% if user.is_active %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-danger">Blacklisted</span>
+                {% endif %}
+            </td>
+            <td>
+                <form action="{{ url_for('toggle_user', user_id=user.id) }}" method="POST">
+                    {% if user.is_active %}
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Blacklist</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-sm btn-outline-success">Activate</button>
+                    {% endif %}
+                </form>
+            </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-center">No users found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+{% endblock %}
