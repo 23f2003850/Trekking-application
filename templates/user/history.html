@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>My Booking History</h2><hr>
+{% if bookings %}
+    <table class="table table-hover mt-3">
+        <thead class="table-dark">
+            <tr><th>Trek Name</th><th>Start Date</th><th>Location</th><th>Booking Status</th></tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.trek.name }}</td>
+                <td>{{ booking.trek.start_date.strftime('%Y-%m-%d') }}</td>
+                <td>{{ booking.trek.location }}</td>
+                <td><span class="badge bg-success">{{ booking.status }}</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info">You haven't booked any treks yet.</div>
+{% endif %}
+<a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+{% endblock %}
