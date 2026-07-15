@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Staff Dashboard</h2><hr>
+<h4>My Assigned Treks</h4>
+{% if treks %}
+    <table class="table table-striped mt-3">
+        <thead class="table-dark">
+            <tr><th>Trek Name</th><th>Date</th><th>Status</th><th>Booked / Total Slots</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for trek in treks %}
+            <tr>
+                <td>{{ trek.name }}</td><td>{{ trek.start_date.strftime('%Y-%m-%d') }}</td><td>{{ trek.status }}</td>
+                <td>{{ trek.total_slots - trek.available_slots }} / {{ trek.total_slots }}</td>
+                <td><a href="{{ url_for('manage_trek', trek_id=trek.id) }}" class="btn btn-sm btn-info">Manage</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info">You currently have no treks assigned to you by the Admin.</div>
+{% endif %}
+{% endblock %}
